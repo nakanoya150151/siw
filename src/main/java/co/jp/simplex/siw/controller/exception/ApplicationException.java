@@ -8,8 +8,8 @@ import lombok.Setter;
 
 /**
  * アプリケーション例外クラス</br>
- * ControllerExceptionHandlerのハンドル対象になっているので業務上発生する可能性のある
- * 任意の例外についてはこのクラスをスローしてください。
+ * 業務上発生する可能性のある任意の例外についてはこのクラスをスローしてください。
+ * スローした例外はControllerExceptionHandlerで処理されます。
  * 
  * @author nakanoya
  *
@@ -17,6 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@SuppressWarnings("serial")
 public class ApplicationException extends RuntimeException {
 
     private HttpErrors error;
