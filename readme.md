@@ -25,12 +25,18 @@ Clone repository (siw means simpex wallet...)
 ```sh
 $ git clone https://github.com/nakanoya150151/siw.git
 ```
+
+#### for intellij
+Set up lombok  
+see. http://siosio.hatenablog.com/entry/2013/12/23/000054
+
+#### for VSCode
 Edit VSCode Setting (Add the following line)  
 ※Change the local path according to your own environment
 ```json
 {
     "java.home": "C:/Program Files/Java/jdk1.8.0_144",
-    "java.jdt.ls.vmargs": "-javaagent:C:/Users/nakanoya150151/work/repos/siw/lib/lombok.jar -Xbootclasspath/a:C:/Users/nakanoya150151/work/repos/siw/lib/lombok.jar",
+    "java.jdt.ls.vmargs": "-javaagent:C:/Users/nakanoya150151/work/repos/siw/lib/lombok.jar -Xbootclasspath/a:C:/Users/nakanoya150151/work/repos/siw/lib/lombok.jar"
 }
 ```
 
