@@ -1,20 +1,27 @@
 package co.jp.simplex.siw.utils;
 
-import java.math.BigDecimal;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.params.MainNetParams;
+import org.bitcoinj.params.RegTestParams;
+import org.bitcoinj.params.TestNet3Params;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AppUtils {
-    /** 1.0BTC = 100000000 satoshis */
-    public static int BTC_TO_SATOSHIS = 100000000;
 
-    /**
-     * BTC単位のビットコインをsatoshisに変換します。
-     * 
-     * @param amount(BTC)
-     * @return
-     */
-    public static long btcToSatoshis(String amount) {
-        BigDecimal satoshis = new BigDecimal(amount);
-        satoshis = satoshis.multiply(new BigDecimal(BTC_TO_SATOSHIS));
-        return satoshis.longValue();
+    @Value("${app.bitcoin.network}")
+    private String bitcoinEnv;
+
+    public NetworkParameters getNetWorkParam() {
+        NetworkParameters params = null;
+        if (bitcoinEnv.equals("Testnet")) {
+            params = TestNet3Params.get();
+        } else if (bitcoinEnv.equals("Regtest")) {
+            params = RegTestParams.get();
+        } else if (bitcoinEnv.equals("Mainnet")) {
+            params = MainNetParams.get();
+        }
+        return params;
     }
 }
