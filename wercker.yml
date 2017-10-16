@@ -11,6 +11,7 @@ dev:
     - script:
       name: run gradle
       code: |
+        chmod +x ./gradlew
         ./gradlew bootRun
 
 # Build definition
