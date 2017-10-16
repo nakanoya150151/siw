@@ -11,7 +11,7 @@ import co.jp.simplex.siw.domain.service.bitcoind.BitcoindService;
 
 @RestController
 @RequestMapping("bitcoind")
-public class BitcoindController extends BaseController {
+public class BitcoindRpcController extends BaseController {
 
     @Autowired
     private BitcoindService bitcoindService;

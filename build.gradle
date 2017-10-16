@@ -31,6 +31,10 @@ dependencies {
 	compile group: 'org.modelmapper', name: 'modelmapper', version: '1.1.0' // DTO <-> Model のマッピング用ライブラリ
 	compile group: 'org.zeromq', name: 'jeromq', version: '0.4.2'
 	compile 'org.springframework.statemachine:spring-statemachine-core:1.2.6.RELEASE'
+	compile("org.springframework.boot:spring-boot-starter-websocket")
+	compile("org.springframework.boot:spring-boot-devtools")
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.2'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.2'
 
     compile files('lib/bitcoinj-core-0.14.5-bundled.jar')
 	compileOnly('org.projectlombok:lombok')

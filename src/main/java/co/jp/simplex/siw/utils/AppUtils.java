@@ -14,13 +14,20 @@ public class AppUtils {
     private String bitcoinEnv;
 
     public NetworkParameters getNetWorkParam() {
-        NetworkParameters params = null;
-        if (bitcoinEnv.equals("Testnet")) {
-            params = TestNet3Params.get();
-        } else if (bitcoinEnv.equals("Regtest")) {
-            params = RegTestParams.get();
-        } else if (bitcoinEnv.equals("Mainnet")) {
-            params = MainNetParams.get();
+        NetworkParameters params;
+        switch (bitcoinEnv) {
+            case "Testnet":
+                params = TestNet3Params.get();
+                break;
+            case "Regtest":
+                params = RegTestParams.get();
+                break;
+            case "Mainnet":
+                params = MainNetParams.get();
+                break;
+            default:
+                params = RegTestParams.get();
+                break;
         }
         return params;
     }
