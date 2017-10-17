@@ -14,8 +14,6 @@ before_install:
   - pip install --user codecov
   - chmod +x gradlew
 
-script:
-  - ./gradlew codeCoverageReport
-
 after_success:
+  - ./gradlew codeCoverageReport
   - codecov
