@@ -23,3 +23,10 @@ build:
         code: |
           chmod +x ./gradlew
           ./gradlew --full-stacktrace -q --project-cache-dir=$WERCKER_CACHE_DIR build
+          ./gradlew codeCoverageReport
+    - script:
+        name: post coverage to codecov
+        code: |
+          export PATH=$PATH:~/.local/bin
+          CODECOV_TOKEN=f9bbbab9-af6e-4518-a3f1-4569585782d5
+          codecov -t $CODECOV_TOKEN
