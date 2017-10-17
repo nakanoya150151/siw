@@ -16,4 +16,4 @@ before_install:
 
 after_success:
   - ./gradlew codeCoverageReport
-  - codecov
+  - bash <(curl -s https://codecov.io/bash)
