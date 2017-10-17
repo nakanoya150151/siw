@@ -11,7 +11,6 @@ dev:
     - script:
       name: run gradle
       code: |
-        chmod +x ./gradlew
         ./gradlew bootRun
 
 # Build definition
@@ -22,4 +21,5 @@ build:
     - script:
         name: run gradle
         code: |
+          chmod +x ./gradlew
           ./gradlew --full-stacktrace -q --project-cache-dir=$WERCKER_CACHE_DIR build
