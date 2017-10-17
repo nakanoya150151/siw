@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/nakanoya150151/siw/branch/master/graph/badge.svg)](https://codecov.io/gh/nakanoya150151/siw)
+
 # How to Use
 
 ## Setup 
