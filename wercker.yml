@@ -34,7 +34,7 @@ deploy:
     - script:
         name: get version from rake
         code: |
-          VERSION=`grep ^version build.gradle | awk '{print $3}'`
+          VERSION=`grep ^version build.gradle | awk -F\' '{print $2}'`
           ls -l
     - github-create-release:
         token: $GITHUB_TOKEN
