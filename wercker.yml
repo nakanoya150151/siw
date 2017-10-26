@@ -42,3 +42,4 @@ deploy:
     - github-upload-asset:
         token: $GITHUB_TOKEN
         file: build/libs/siw-${VERSION}.jar
+        content-type: application/zip
