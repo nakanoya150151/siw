@@ -27,6 +27,5 @@ build:
     - script:
         name: post coverage to codecov
         code: |
-          export PATH=$PATH:~/.local/bin
           CODECOV_TOKEN=f9bbbab9-af6e-4518-a3f1-4569585782d5
           bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN

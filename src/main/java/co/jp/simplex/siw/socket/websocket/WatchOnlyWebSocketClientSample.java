@@ -1,5 +1,6 @@
 package co.jp.simplex.siw.socket.websocket;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.client.WebSocketConnectionManager;
@@ -9,6 +10,7 @@ import javax.annotation.PostConstruct;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@Slf4j
 @Component
 public class WatchOnlyWebSocketClientSample {
 
@@ -33,7 +35,7 @@ public class WatchOnlyWebSocketClientSample {
 
         WebSocketConnectionManager manager = new WebSocketConnectionManager(new StandardWebSocketClient(), handler, URL);
         manager.start();
-        System.out.println("WatchOnlyWebSocketClientSample connecting...");
+        log.info("WatchOnlyWebSocketClientSample connecting...");
 
     }
 }

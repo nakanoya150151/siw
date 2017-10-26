@@ -1,20 +1,21 @@
 package co.jp.simplex.siw.socket.zmq;
 
-import co.jp.simplex.siw.socket.websocket.FullNodeWebSocketHandler;
+import co.jp.simplex.siw.domain.model.Block;
+import co.jp.simplex.siw.domain.service.BlockService;
 import co.jp.simplex.siw.utils.AppUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.bitcoinj.core.Block;
+import co.jp.simplex.siw.utils.BitcoinjObjectConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.bitcoinj.core.Context;
 import org.bitcoinj.core.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.TextMessage;
 import org.zeromq.ZMQ;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@Slf4j
 @Component
 public class BitcondZmqClient {
     private static final String url = "tcp://127.0.0.1:28332";
@@ -23,7 +24,10 @@ public class BitcondZmqClient {
     private AppUtils appUtils;
 
     @Autowired
-    private FullNodeWebSocketHandler handler;
+    private BitcoinjObjectConverter bitcoinjObjectConverter;
+
+    @Autowired
+    private BlockService blockService;
 
     @PostConstruct
     private void init() {
@@ -44,25 +48,24 @@ public class BitcondZmqClient {
         // socket.subscribe("hashblock");
         socket.subscribe("rawtx");
         // socket.subscribe("hashtx");
-        System.out.println("connect to " + url);
+        log.info("connect to " + url);
 
         while (!Thread.currentThread().isInterrupted()) {
+            String nodeName = Thread.currentThread().getName();
             String topic = socket.recvStr();
-            System.out.println("client - topic:" + topic);
+            log.info("client - topic:" + topic);
             if (socket.hasReceiveMore()) {
                 byte[] body = socket.recv();
                 try {
                     switch (topic) {
                         case "rawblock":
-                            Block block = new Block(appUtils.getNetWorkParam(), body);
-                            System.out.println("client - body:" + block.toString());
-
-                            TextMessage txt = new TextMessage(block.toString());
-                            handler.sendMessage(txt);
+                            Block block = bitcoinjObjectConverter.convertBlockOnly(body);
+                            log.info("client - body:" + block.toString());
+                            blockService.receiveBlock(block, nodeName);
                             break;
                         case "rawtx":
                             Transaction tx = new Transaction(appUtils.getNetWorkParam(), body);
-                            System.out.println("client - body:" + tx.toString());
+                            log.info("client - body:" + tx.toString());
                             break;
                         default:
                             break;

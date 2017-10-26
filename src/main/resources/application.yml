@@ -12,6 +12,8 @@ spring:
 app:
   bitcoin:
     network: Regtest
+  fullnode:
+    node-numbers: 1
 logging:
     file: logs/myapp.log
     level:

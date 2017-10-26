@@ -5,6 +5,7 @@ import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
 import com.googlecode.jsonrpc4j.ProxyUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.net.URL;
@@ -14,8 +15,8 @@ import java.util.Map;
 @Configuration
 public class BitcoindConfig {
     private static final String endpoint = "http://localhost:18332";
-    final String rpcuser ="siw";
-    final String rpcpassword ="siw";
+    private static final String rpcuser ="siw";
+    private static final String rpcpassword ="siw";
    
     public BitcoindConfig() {
         Authenticator.setDefault(new Authenticator() {
@@ -33,7 +34,7 @@ public class BitcoindConfig {
         try {
             url = new URL(endpoint);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return new JsonRpcHttpClient(url, map);
     }

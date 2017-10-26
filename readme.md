@@ -20,6 +20,9 @@ Boot bitcoind with regtest-mode
 ```sh
 $ cd ${bitcoin intall dir}/daemon
 $ ./bitcoind.exe -conf=/path/to/bitcoin.conf
+--- for me.
+$ cd /c/Users/nakanoya150151/work/Bitcoin/daemon/
+$ ./bitcoind.exe -conf=/c/Users/nakanoya150151/work/Bitcoin/daemon/bitcoin.conf
 ```
 
 ### node-manager
@@ -54,6 +57,10 @@ $ ./gradlew bootRun
 ```sh
 $ cd ${bitcoin intall dir}/daemon
 $ ./bitcoin-cli.exe -conf=/path/to/bitcoin.conf generate 1
+--- for me.
+$ cd /c/Users/nakanoya150151/work/Bitcoin/daemon/
+$ ./bitcoin-cli.exe -conf=/c/Users/nakanoya150151/work/Bitcoin/daemon/bitcoin.conf
+ generate 1
 ```
 
 ### Create Transaction

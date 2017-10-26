@@ -1,6 +1,7 @@
 package co.jp.simplex.siw.socket.websocket;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -9,6 +10,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class FullNodeWebSocketHandler extends TextWebSocketHandler {
 
@@ -17,7 +19,7 @@ public class FullNodeWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         this.session = session;
-        System.out.println("New Session established:" + session.getId());
+        log.info("New Session established:" + session.getId());
     }
 
     @Override
@@ -28,6 +30,7 @@ public class FullNodeWebSocketHandler extends TextWebSocketHandler {
     public void sendMessage(TextMessage message) {
         try {
             this.session.sendMessage(message);
+            log.info("Send Message:" + message.getPayload());
         } catch (IOException e) {
             e.printStackTrace();
         }

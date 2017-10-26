@@ -1,20 +1,17 @@
 package co.jp.simplex.siw.state;
 
-import co.jp.simplex.siw.state.FullNodeStateMachine;
 import co.jp.simplex.siw.state.FullNodeStateMachine.Events;
 import co.jp.simplex.siw.state.FullNodeStateMachine.LBStates;
 import co.jp.simplex.siw.state.FullNodeStateMachine.NodeStates;
-
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Component
-public class StateManager {
+public class FullNodeStateManager {
 
     @Autowired
     private FullNodeStateMachine fullNodeStateMachine;
