@@ -35,7 +35,7 @@ deploy:
         name: get version from rake
         code: |
           VERSION=`grep ^version build.gradle | awk '{print $3}'`
-          GITHUB_TOKEN=c947feb54a026a460b03aba4ad026145aecd8921
+          GITHUB_TOKEN=1ad1f092deb4a146c5f28a141619fb90ffa95123
     - github-create-release:
         token: $GITHUB_TOKEN
         tag: $VERSION
