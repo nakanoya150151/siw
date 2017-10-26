@@ -23,6 +23,18 @@ repositories {
 	mavenCentral()
 }
 
+def urlFile = { url, name ->
+    File file = new File("$buildDir/libs/${name}.jar")
+    file.parentFile.mkdirs()
+    if (!file.exists()) {
+        new URL(url).withInputStream { downloadStream ->
+            file.withOutputStream { fileOut ->
+                fileOut << downloadStream
+            }
+        }
+    }
+    files(file.absolutePath)
+}
 
 dependencies {
 	// compile('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -41,6 +53,8 @@ dependencies {
 	compileOnly('org.projectlombok:lombok')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+//    compile urlFile('https://github.com/nakanoya150151/siw/releases/download/0.0.1/siw-0.0.1-SNAPSHOT.jar?raw=true', 'siw')
 }
 task codeCoverageReport(type: JacocoReport) {
 	executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
@@ -53,3 +67,4 @@ task codeCoverageReport(type: JacocoReport) {
 	classDirectories = fileTree(dir: './build/classes/main')
 	sourceDirectories = files('src/main/java')
 }
+

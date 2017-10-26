@@ -22,10 +22,23 @@ build:
         name: run gradle
         code: |
           chmod +x ./gradlew
-          ./gradlew --full-stacktrace -q --project-cache-dir=$WERCKER_CACHE_DIR build
+          ./gradlew --full-stacktrace -q --project-cache-dir=$WERCKER_CACHE_DIR jar
           ./gradlew codeCoverageReport
     - script:
         name: post coverage to codecov
         code: |
           CODECOV_TOKEN=f9bbbab9-af6e-4518-a3f1-4569585782d5
           bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
+deploy:
+  steps:
+    - script:
+        name: get version from rake
+        code: |
+          VERSION=`grep ^version build.gradle | awk '{print $3}'`
+          GITHUB_TOKEN=c947feb54a026a460b03aba4ad026145aecd8921
+    - github-create-release:
+        token: $GITHUB_TOKEN
+        tag: $VERSION
+    - github-upload-asset:
+        token: $GITHUB_TOKEN
+        file: build/libs/siw-${VERSION}.jar
