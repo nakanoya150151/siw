@@ -22,7 +22,7 @@ build:
         name: run gradle
         code: |
           chmod +x ./gradlew
-          ./gradlew --full-stacktrace -q --project-cache-dir=$WERCKER_CACHE_DIR jar
+          ./gradlew --full-stacktrace -q --project-cache-dir=$WERCKER_CACHE_DIR build jar
           ./gradlew codeCoverageReport
     - script:
         name: post coverage to codecov
@@ -35,9 +35,10 @@ deploy:
         name: get version from rake
         code: |
           VERSION=`grep ^version build.gradle | awk '{print $3}'`
+          ls -l
     - github-create-release:
         token: $GITHUB_TOKEN
         tag: $VERSION
     - github-upload-asset:
         token: $GITHUB_TOKEN
-        file: build/libs/siw-${VERSION}.jar
+        file: siw-${VERSION}.jar
