@@ -32,10 +32,9 @@ build:
 deploy:
   steps:
     - script:
-        name: get version from rake
+        name: get version
         code: |
           VERSION=`grep ^version build.gradle | awk -F\' '{print $2}'`
-          ls -l
     - github-create-release:
         token: $GITHUB_TOKEN
         tag: $VERSION
