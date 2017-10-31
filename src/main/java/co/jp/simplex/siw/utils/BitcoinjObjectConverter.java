@@ -1,6 +1,7 @@
 package co.jp.simplex.siw.utils;
 
 import co.jp.simplex.siw.domain.model.Block;
+import co.jp.simplex.siw.domain.model.BlockHeader;
 import co.jp.simplex.siw.domain.model.Transaction;
 import co.jp.simplex.siw.domain.model.TxIn;
 import co.jp.simplex.siw.domain.model.TxOut;
@@ -18,13 +19,13 @@ public class BitcoinjObjectConverter {
     @Autowired
     private AppUtils appUtils;
 
-    public Block convertBlockOnly(byte[] blockBody) {
+    public BlockHeader convertBlockHeader(byte[] blockBody) {
         org.bitcoinj.core.Block jBlock = new org.bitcoinj.core.Block(appUtils.getNetWorkParam(), blockBody);
-        Block block = new Block();
-        block.setPayload(blockBody);
-        block.setHash(jBlock.getHashAsString());
-        block.setPrevHash(jBlock.getPrevBlockHash().toString());
-        return block;
+        BlockHeader bh = new BlockHeader();
+        bh.setPayload(blockBody);
+        bh.setHash(jBlock.getHashAsString());
+        bh.setPrevHash(jBlock.getPrevBlockHash().toString());
+        return bh;
     }
 
     public Block convertBlock(byte[] blockBody) {

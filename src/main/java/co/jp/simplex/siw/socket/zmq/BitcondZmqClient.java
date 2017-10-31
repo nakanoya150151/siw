@@ -1,6 +1,6 @@
 package co.jp.simplex.siw.socket.zmq;
 
-import co.jp.simplex.siw.domain.model.Block;
+import co.jp.simplex.siw.domain.model.BlockHeader;
 import co.jp.simplex.siw.domain.service.BlockService;
 import co.jp.simplex.siw.utils.AppUtils;
 import co.jp.simplex.siw.utils.BitcoinjObjectConverter;
@@ -59,9 +59,9 @@ public class BitcondZmqClient {
                 try {
                     switch (topic) {
                         case "rawblock":
-                            Block block = bitcoinjObjectConverter.convertBlockOnly(body);
-                            log.info("client - body:" + block.toString());
-                            blockService.receiveBlock(block, nodeName);
+                            BlockHeader bh = bitcoinjObjectConverter.convertBlockHeader(body);
+                            log.info("client - body:" + bh.toString());
+                            blockService.receiveBlock(bh, nodeName);
                             break;
                         case "rawtx":
                             Transaction tx = new Transaction(appUtils.getNetWorkParam(), body);
