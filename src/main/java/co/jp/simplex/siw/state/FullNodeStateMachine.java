@@ -8,6 +8,9 @@ import org.springframework.statemachine.config.StateMachineBuilder;
 import org.springframework.statemachine.config.StateMachineBuilder.Builder;
 import org.springframework.stereotype.Component;
 
+/**
+ * フルノードモジュールの状態を定義するクラス
+ */
 @Component
 public class FullNodeStateMachine {
 
@@ -18,8 +21,8 @@ public class FullNodeStateMachine {
         INACTIVE, ACTIVE
     }
 
-    public static enum LBStates {
-        DISABLE, ENABLE
+    public static enum VerifyStates {
+        INVALID, VALID
     }
     
     public static enum Events {
@@ -48,22 +51,22 @@ public class FullNodeStateMachine {
     }
 
     
-    public StateMachine<LBStates, Events> buildLBStateMachine() throws Exception {
-        Builder<LBStates, Events> builder = StateMachineBuilder.builder();
+    public StateMachine<VerifyStates, Events> buildVerifyStateMachine() throws Exception {
+        Builder<VerifyStates, Events> builder = StateMachineBuilder.builder();
         builder.configureConfiguration().withConfiguration().beanFactory(appContext.getAutowireCapableBeanFactory());
     
         builder.configureStates()
             .withStates()
-                .initial(LBStates.DISABLE)
-                .states(EnumSet.allOf(LBStates.class));
+                .initial(VerifyStates.INVALID)
+                .states(EnumSet.allOf(VerifyStates.class));
     
         builder.configureTransitions()
             .withExternal()
-                .source(LBStates.DISABLE).target(LBStates.ENABLE)
+                .source(VerifyStates.INVALID).target(VerifyStates.VALID)
                 .event(Events.ON)
                 .and()
             .withExternal()
-                .source(LBStates.ENABLE).target(LBStates.DISABLE)
+                .source(VerifyStates.VALID).target(VerifyStates.INVALID)
                 .event(Events.OFF);
     
         return builder.build();

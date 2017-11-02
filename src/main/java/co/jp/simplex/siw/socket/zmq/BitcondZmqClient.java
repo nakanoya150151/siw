@@ -8,17 +8,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.bitcoinj.core.Context;
 import org.bitcoinj.core.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.zeromq.ZMQ;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 @Slf4j
 @Component
 public class BitcondZmqClient {
     private static final String url = "tcp://127.0.0.1:28332";
+    public static final String THREAD_PREFIX = "fullnode-";
 
     @Autowired
     private AppUtils appUtils;
@@ -29,11 +32,22 @@ public class BitcondZmqClient {
     @Autowired
     private BlockService blockService;
 
+    @Value("${app.fullnode.node-numbers}")
+    private int nodeNumbers;
+    
     @PostConstruct
     private void init() {
-        ExecutorService executor = Executors.newFixedThreadPool(1);
-        Runnable runner = this::connectZmqServer;
-        executor.execute(runner);
+        for (int i = 1; i <= nodeNumbers; i++) {
+            final int count = i;
+            ExecutorService executor = Executors.newFixedThreadPool(1, new ThreadFactory() {
+                @Override
+                public Thread newThread(Runnable r) {
+                    return new Thread(r, THREAD_PREFIX + count);
+                }
+            });
+            Runnable runner = this::connectZmqServer;
+            executor.execute(runner);
+        }
     }
 
     private void connectZmqServer() {

@@ -19,7 +19,7 @@ public class FullNodeWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         this.session = session;
-        log.info("New Session established:" + session.getId());
+        log.info("New Session established. sessionID = " + session.getId());
     }
 
     @Override
